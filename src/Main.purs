@@ -1,9 +1,11 @@
 module Main where
 
-import Prelude
+import Prelude (Unit, unit, pure, discard)
+import Foreign (Foreign)
 import Effect (Effect)
-import Effect.Console (log)
+import Lambda (Context, succeed)
 
-main :: Effect Unit
-main = do
-  log "Hello sailor!"
+handler :: Context -> Foreign -> Effect Unit
+handler cxt _ = do
+  succeed cxt "Hello sailor!"
+  pure unit

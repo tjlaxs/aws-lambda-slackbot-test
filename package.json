@@ -1,0 +1,24 @@
+{
+    "name": "aws-lambda-test",
+    "version": "1.0.0",
+    "description": "Just a tiny test of AWS lambda",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "pulp build -o node_modules",
+        "package": "zip -r package.zip *"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/tjlaxs/aws-lambda-test.git"
+    },
+    "author": "Tero Laxström",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tjlaxs/aws-lambda-test/issues"
+    },
+    "homepage": "https://github.com/tjlaxs/aws-lambda-test#readme"
+}
