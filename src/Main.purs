@@ -1,9 +1,18 @@
 module Main where
 
-import Prelude
-import Effect (Effect)
-import Effect.Console (log)
+import Foreign (Foreign)
+import Lambda (Context)
 
-main :: Effect Unit
-main = do
-  log "Hello sailor!"
+newtype Response = Response
+  { statusCode :: Int
+  , isBase64Encoded :: Boolean
+  , body :: String
+  }
+
+handler :: Context -> Foreign -> Response
+handler _ _ =
+  Response
+  { statusCode: 200
+  , isBase64Encoded: false
+  , body: "Hello sailor!"
+  }
