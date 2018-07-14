@@ -7,4 +7,5 @@
 /.psc*
 /.purs*
 /.psa*
-package.zip
+bundle-*.zip
+_build
