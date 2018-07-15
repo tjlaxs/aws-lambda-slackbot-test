@@ -1,6 +1,7 @@
 module Main where
 
-import Prelude (Unit, bind, discard, pure, unit, ($), (<>), (>>=))
+import Prelude
+import Data.Array (head, (!!))
 import Foreign (F, Foreign, ForeignError, readBoolean, readString)
 import Foreign.Index ((!))
 import Lambda (Context, Response(..), fail, succeed)
@@ -8,6 +9,11 @@ import Effect (Effect)
 import Data.Either (Either(..))
 import Control.Monad.Except (runExcept)
 import Data.List.Types (NonEmptyList)
+import Data.Tuple (Tuple(..))
+import Data.Maybe (Maybe, fromMaybe)
+import Data.String.Common (split)
+import Data.String.Pattern (Pattern(..))
+import Global.Unsafe (unsafeDecodeURI)
 
 newtype Event = Event
   { resource :: String
@@ -26,6 +32,18 @@ readEvent value = do
   isBase64Encoded <- value ! "isBase64Encoded" >>= readBoolean
   pure $ Event { resource, path, httpMethod, body, isBase64Encoded }
 
+tuplify :: Array String -> Tuple String (Maybe String)
+tuplify xs = Tuple (fromMaybe "" $ head xs) (xs !! 1)
+
+splitKeyvals :: String -> (Array String)
+splitKeyvals = split (Pattern "=")
+
+splitParams :: String -> Array String
+splitParams = split (Pattern "&")
+
+decodeSlackCommand :: String -> Array (Tuple String (Maybe String))
+decodeSlackCommand = map tuplify <<< map (map unsafeDecodeURI) <<< map splitKeyvals <<< splitParams
+
 handler :: Context -> Foreign -> Effect Unit
 handler ctx evt = do
   createResponse $ runExcept $ readEvent evt
@@ -39,5 +57,6 @@ handler ctx evt = do
                                                     }
     createResponse (Right (Event res)) = succeed ctx $ Response { statusCode: 200
                                                         , isBase64Encoded: false
-                                                        , body: "*Hello sailor!*\nYour request was: '" <> res.body <> "'"
+                                                        , body: "*Hello sailor!*\nYour request was: '" <> show (decodeSlackCommand res.body) <> "'"
                                                         }
+
