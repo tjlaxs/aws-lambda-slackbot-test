@@ -12,31 +12,23 @@ newtype Token = Token String
 instance showToken :: Show Token where
   show _ = "Token (censored)"
 
-newtype Team = Team
-  { id :: String
-  , domain :: String
-  }
-
-newtype Channel = Channel
-  { id :: String
-  , name :: String
-  }
-
-newtype User = User
-  { id :: String
-  , name :: String
-  }
+data Team = Team String String -- Id Domain
+data Channel = Channel String String -- Id Name
+data User = User String String -- Id Name
+data Command = Command String String -- Command Text
 
 newtype CommandRequest = CommandRequest
   { token :: Token
   , team :: Team
   , channel :: Channel
   , user :: User
-  , command :: String
-  , text :: String
+  , command :: Command
   , responseUrl :: String
   , triggerId :: String
   }
+
+-- commandify :: Array (Tuple String (Maybe String)) -> CommandRequest
+-- commandify = 
 
 decodeSlackCommand :: String -> Array (Tuple String (Maybe String))
 decodeSlackCommand =
