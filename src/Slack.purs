@@ -6,11 +6,11 @@ import Data.Maybe (Maybe, fromMaybe)
 import Data.String.Pattern (Pattern(..))
 import Data.String.Common (split)
 import Data.Tuple (Tuple(..))
-import Global.Unsafe (unsafeDecodeURI)
+import Global.Unsafe (unsafeDecodeURIComponent)
 
 decodeSlackCommand :: String -> Array (Tuple String (Maybe String))
 decodeSlackCommand =
-  map tuplify <<< map (map unsafeDecodeURI) <<< map splitKeyvals <<< splitParams
+  map tuplify <<< map (map unsafeDecodeURIComponent) <<< map splitKeyvals <<< splitParams
 
   where
     tuplify :: Array String -> Tuple String (Maybe String)
