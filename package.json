@@ -1,0 +1,25 @@
+{
+    "name": "aws-lambda-slackbot-test",
+    "version": "1.0.0",
+    "description": "Just a tiny test of AWS lambda",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "pulp build -o node_modules",
+        "package": "rm -rf _build;mkdir _build;cp -a index.js node_modules _build/;cd _build;zip -r ../bundle-$(date +%s).zip *",
+        "pushrepo": "echo -n 'Repo: ';read repo;scp $(find . -name 'bundle-*.zip' -print | sort -nr | head -1 | tr -d '\n') $(echo \"$repo\"|tr -d '\n'):pursrepo/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/tjlaxs/aws-lambda-slackbot-test.git"
+    },
+    "author": "Tero Laxström",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tjlaxs/aws-lambda-slackbot-test/issues"
+    },
+    "homepage": "https://github.com/tjlaxs/aws-lambda-slackbot-test#readme"
+}

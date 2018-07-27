@@ -1,8 +1,12 @@
 {
-  "name": "aws-lambda-test",
+  "name": "aws-lambda-slackbot-test",
   "set": "psc-0.12.0",
   "source": "https://github.com/purescript/package-sets.git",
   "depends": [
+    "generics-rep",
+    "partial",
+    "ordered-collections",
+    "foreign",
     "psci-support",
     "console",
     "effect",
